@@ -1,10 +1,14 @@
 import React from 'react';
-import ReducerSample from './ReducerSample';
+import MyForm from './MyForm';
+
 
 
 const App: React.FC = () => {
+  const onSubmit = (form: { name:string; description: string}) =>{
+    console.log(form);
+  }
   return (
-    <ReducerSample />
+    <MyForm onSubmit={onSubmit}/>
   );
 }
 

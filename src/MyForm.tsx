@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
 type MyFormProps = {
     onSubmit: (form: { name:string; description: string}) => void
 }
 
 function MyForm({onSubmit}:MyFormProps){
+    const inputRef = useRef<HTMLInputElement>(null)
+    // ref안에 DOM을 담을 때는 초기값을 null로 설정해야 한다
+    // DOM위에 커서를 올리면 generic으로 담아줘야할 타입을 확인할 수 있음
+
     const [form, setForm] = useState({
         name:'',
         description:''
@@ -32,11 +36,15 @@ function MyForm({onSubmit}:MyFormProps){
             name:'',
             description:''
         })
+
+        // inputRef.current안의 값을 사용하기 위해서 null체킹을 해줘야 함
+        if(!inputRef.current) return;
+        inputRef.current.focus()
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input name="name" value={name} onChange={onChange} />
+            <input name="name" value={name} onChange={onChange} ref={inputRef}/>
             <input name="description" value={description} onChange={onChange} />
             <button type="submit">등록</button>
         </form>
